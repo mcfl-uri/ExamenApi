@@ -13,6 +13,7 @@ import cat.api.examenapi.R
 import cat.api.examenapi.api.ApiInterface
 import cat.api.examenapi.api.models.Alumne
 import cat.api.examenapi.api.models.Cicle
+import cat.api.examenapi.api.models.Qualificacio
 import cat.api.examenapi.databinding.FragmentActionsBinding
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -43,6 +44,10 @@ class ActionsFragment : Fragment() {
                 getCicleById(binding.getCicleInput.text.toString().toInt())
         }
 
+        binding.getAprovatsButton.setOnClickListener {
+            getAprovats()
+        }
+
         binding.deleteAlumneButton.setOnClickListener {
             if (binding.deleteInput.text.toString().isNotBlank())
                 deleteAlumneById(binding.deleteInput.text.toString().toInt())
@@ -66,6 +71,25 @@ class ActionsFragment : Fragment() {
             override fun onFailure(call: Call<Cicle>, t: Throwable) {
                 showAlert(false)
             }
+        })
+    }
+
+    fun getAprovats() {
+        val call = ApiInterface.create().getAprovatsModul(listOf(5,6,7,8,9,10))
+
+        call.enqueue(object : Callback<List<Qualificacio>> {
+            override fun onResponse(
+                call: Call<List<Qualificacio>>,
+                response: Response<List<Qualificacio>>
+            ) {
+                val tmp = response.body()!!
+                view?.findViewById<TextView>(R.id.alumnesAprovats)?.setText("Alumnes aprovats al mòdul 1: ${tmp.size}")
+            }
+
+            override fun onFailure(call: Call<List<Qualificacio>>, t: Throwable) {
+                showAlert(false)
+            }
+
         })
     }
 

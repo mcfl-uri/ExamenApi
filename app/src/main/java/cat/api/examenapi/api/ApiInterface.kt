@@ -2,6 +2,7 @@ package cat.api.examenapi.api
 
 import cat.api.examenapi.api.models.Alumne
 import cat.api.examenapi.api.models.Cicle
+import cat.api.examenapi.api.models.Qualificacio
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -11,8 +12,10 @@ import retrofit2.http.*
 
 interface ApiInterface {
 
-    @GET("autores")
-    fun getAllAuthors(): Call<List<Cicle>>
+    @GET("qualificacions?&modul=1")
+    fun getAprovatsModul(
+        @Query("nota") notes: List<Int?>?
+    ): Call<List<Qualificacio>>
 
     @GET("cicles/{id}")
     fun getCicleById(
