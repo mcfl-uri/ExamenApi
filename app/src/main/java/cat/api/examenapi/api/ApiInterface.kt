@@ -1,6 +1,8 @@
 package cat.api.examenapi.api
 
+import cat.api.examenapi.api.models.Alumne
 import cat.api.examenapi.api.models.Cicle
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,14 +19,16 @@ interface ApiInterface {
         @Path("id") number: Int
     ): Call<Cicle>
 
-    @DELETE("/autores/{id}")
-    fun deleteAuthor(
+    @DELETE("alumnes/{id}")
+    fun deleteAlumne(
         @Path("id") id: Int
-    ): Call<Cicle?>
+    ): Call<Alumne?>
 
-    @Headers("Content-Type: application/json")
-    @POST("autores")
-    fun postAutor(@Body cicle: Cicle): Call<Cicle>
+    @FormUrlEncoded
+    @PUT("alumnes/{id}")
+    fun updateAlumne(
+        @Path("id") id: Int?, @Field("nom") nom: String
+    ): Call<ResponseBody?>?
 
     companion object {
 
