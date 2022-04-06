@@ -45,7 +45,7 @@ class ActionsFragment : Fragment() {
             override fun onResponse(call: Call<Cicle>, response: Response<Cicle>) {
                 if (response?.body() != null) {
                     var tmp: Cicle = response.body()!!
-                    view?.findViewById<TextView>(R.id.getNomCicle)?.setText(tmp.nomCicle)
+                    view?.findViewById<TextView>(R.id.getNomCicle)?.setText("Nom del cicle: ${tmp.nomCicle}")
                 }
             }
 
